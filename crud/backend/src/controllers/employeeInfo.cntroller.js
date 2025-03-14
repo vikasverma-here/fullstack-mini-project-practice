@@ -33,7 +33,11 @@ module.exports.getEmployee= async(req,res)=>{
 }
 
 module.exports.updateEmployee = async(req,res)=>{
-    const id = req.params.id
+    try{
+        const id = req.params.id
     const employee = await Employee.findByIdAndUpdate(id,req.body,{ new: true,})
     res.send(employee)
+    }catch(err){
+        console.log(err)
+    }
 }
