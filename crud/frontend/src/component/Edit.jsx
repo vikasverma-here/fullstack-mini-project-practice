@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 export default function Edit({id,setid}) {
-console.log("id from edit " ,id)
+const navigation = useNavigate()
+
   const [employee, setEmployee] = useState({
     name: "",
     email: "",
@@ -22,15 +24,16 @@ console.log("id from edit " ,id)
 
     const response = await axios.put(`http://localhost:5400/employees/updateUser/${id}`,employee);
     setEmployee(response.data);
-    console.log("update successfully",response.data)
+    toast.success("user updated  successfully")
+    navigation("/")
    
   };
 
   return (
     <>
-       {/* <Link to={"/"}> <button className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition m-6">Back to Home</button></Link>  */}
+       
         <div className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold text-center mb-6">Add Employee</h2>
+      <h2 className="text-2xl font-bold text-center mb-6">Please Fill  all  field while Updating</h2>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <input type="text" name="name" placeholder="Name"  className="w-full p-2 border rounded" onChange={handleChange} />

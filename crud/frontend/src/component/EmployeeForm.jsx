@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 export default function EmployeeForm() {
     const navigate = useNavigate()
   const [employee, setEmployee] = useState({
@@ -22,7 +23,7 @@ export default function EmployeeForm() {
     console.log(employee)
     
     const response  = await axios.post("http://localhost:5400/employees/info",employee) 
-    console.log("Employee added successfully:", response.data);
+   
 
 
     setEmployee({
@@ -34,6 +35,7 @@ export default function EmployeeForm() {
      salary: "",
    });
 
+   toast.success("Employee added successfully!");
    navigate("/allemployee")
    
   };

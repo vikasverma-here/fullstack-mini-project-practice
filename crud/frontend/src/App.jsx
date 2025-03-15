@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage'
 import EmployeeForm from './component/EmployeeForm'
 import EmployeeRecord from './component/EmployeeRecord'
 import Edit from './component/Edit'
+import { ToastContainer} from 'react-toastify';
 const App = () => {
   const [id, setid] = useState("dfdfd")
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/about" element={<About />} />
     </Routes>
+    <ToastContainer />
     </div>
   )
 }

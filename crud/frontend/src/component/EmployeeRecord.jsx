@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 export default function EmployeeRecord(props) {
 const [employees, setemployees] = useState([])
 
@@ -30,8 +31,9 @@ const navigate = useNavigate()
       const handleDelete = async (id) => {
         try {
           await axios.delete(`http://localhost:5400/employees/delete/${id}`);
-          setemployees(employees.filter((employee) => employee._id !== id)); // Remove from UI
-          navigate("/"); // Navigate after deleting
+          setemployees(employees.filter((employee) => employee._id !== id)); 
+          navigate("/"); 
+          toast.error("Employee deleted successfully!",{ style: { backgroundColor: "red", color: "white" }});
         } catch (error) {
           console.error("Error deleting employee:", error);
         }
@@ -40,6 +42,9 @@ const navigate = useNavigate()
 
 
     return (
+      <>
+      <Link to={"/"}> <button className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition m-6">Back to Home</button></Link> 
+
       <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
         <h2 className="text-3xl font-bold text-center mb-6">Employee Records</h2>
         <div className="overflow-x-auto">
@@ -87,6 +92,8 @@ const navigate = useNavigate()
           </table>
         </div>
       </div>
+      </>
+     
     );
   }
   
