@@ -66,3 +66,53 @@ module.exports.getUserTodos = async (req, res) => {
     }
 };
 
+
+// cotroller for updateTodo 
+
+module.exports.updateTodo= async(req,res)=>{
+   
+        try {
+            const { id } = req.params;
+            const userId = req.user.userId
+            const updatedTodo = await Todo.findByIdAndUpdate(id, req.body, { new: true });
+    
+
+            if (updatedTodo.userId.toString() !== userId) {
+                return res.status(403).json({ success: false, message: "Unauthorized! You cannot update this todo this todo." });
+            }
+
+            if (!updatedTodo) {
+                return res.status(404).json({ success: false, message: "Todo not found" });
+            }
+    
+            res.status(200).json({ success: true, message: "Todo updated", todo: updatedTodo });
+        } catch (error) {
+            res.status(500).json({ success: false, message: "Internal Server Error" });
+        }
+
+    
+}
+
+module.exports.deleteTodo= async(req,res)=>{
+   
+        try {
+            const { id } = req.params;
+          const userId = req.user.userId
+            const todo = await Todo.findByIdAndDelete(id);
+                
+
+            if (todo.userId.toString() !== userId) {
+                return res.status(403).json({ success: false, message: "Unauthorized! You cannot delete this todo." });
+            }
+    
+            if (!todo) {
+                return res.status(404).json({ success: false, message: "Todo not found" });
+            }
+    
+            res.status(200).json({ success: true, message: "Todo deleted successfully" });
+        } catch (error) {
+            res.status(500).json({ success: false, message: "Internal Server Error" });
+        }
+
+    
+}
