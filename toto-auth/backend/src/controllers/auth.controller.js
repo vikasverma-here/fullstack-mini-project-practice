@@ -55,9 +55,15 @@ module.exports.login = async (req,res)=>{
 const payload = {userId:user._id,userName:user.userName}
 const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"1d"})
 
- res.cookie("userToken",token)
+res.cookie("userToken", token, {
+  httpOnly: true,
+  secure: false, // Localhost ke liye
+  sameSite: "lax", // Pehle yeh try karo
+});
 
- res.status(200).json({success:true,message:"User Login Sucessfully"})
+
+
+ res.status(200).json({success:true,message:"User Login Sucessfully", userId: user._id,})
   }catch(error){
     console.error("Login Error :" , error)
     res.status(500).json({success:false,message:"Internal Server Error !"})

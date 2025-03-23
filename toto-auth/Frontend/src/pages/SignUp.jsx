@@ -2,8 +2,12 @@ import { useForm } from "react-hook-form";
 import axios from "axios"; 
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
 const SignUpForm = () => {
   const navigate = useNavigate();
+  const { setUser} = useContext(UserContext)
+  // console.log(user)
   const {
     register,
     handleSubmit,
@@ -14,8 +18,9 @@ const SignUpForm = () => {
     console.log("User Signed Up:", data);
     try{
       const response = await axios.post("http://localhost:4000/api/auth/signUp", data);
-      console.log("response comming from here",response)
+      console.log("response comming from here",response.data.newUser)
       toast(response.data.message)
+      setUser(response.data.newUser)
       navigate("/login")
     }
     catch(error){

@@ -1,4 +1,26 @@
-const Tasks = () => {
+import { useContext, useEffect } from "react";
+import { UserContext } from "../context/userContext";
+import axios from "axios";
+
+const Tasks = () => { 
+   const {userid} = useContext(UserContext)
+  const {task,setTask}  = useContext(UserContext)
+  
+  useEffect(() => {
+    const fetchTodos = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/api/todo/getTodos");
+        console.log(response);
+
+      } catch (error) {
+        console.error("Error fetching todos:", error);
+      }
+    };
+  
+    fetchTodos();
+  }, []);
+
+
     const tasks = [
       { id: 1, title: "Learn React", description: "Complete React hooks tutorial", status: "pending", dueDate: "2025-03-25" },
       { id: 2, title: "Build Todo App", description: "Create a simple task manager", status: "in-progress", dueDate: "2025-03-28" },

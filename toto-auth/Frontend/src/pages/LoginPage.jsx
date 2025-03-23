@@ -2,7 +2,10 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
 const LoginPage = () => {
+  const {setUserid} = useContext(UserContext)
     const navigate = useNavigate()
   const {
     register,
@@ -14,8 +17,11 @@ const LoginPage = () => {
     console.log("Login Successful:", data);
 
     try{
-        const response = await axios.post("http://localhost:4000/api/auth/login", data);
+      const response = await axios.post("http://localhost:4000/api/auth/login", data, {
+        withCredentials: true, // Yeh zaroori hai cookie ke liye
+      });
         console.log("response comming from here",response)
+       
         toast(response.data.message)
         navigate("/")
       }
