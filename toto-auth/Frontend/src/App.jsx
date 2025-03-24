@@ -10,6 +10,7 @@ import Add from './pages/Add'
 import SignUpForm from './pages/SignUp'
 import LoginPage from './pages/LoginPage'
 import { ToastContainer, toast } from "react-toastify";
+import Edit from './pages/Edit'
 const App = () => {
   return (
     <>
@@ -20,6 +21,7 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="/completed" element={<Completed />} />
       <Route path="/add" element={<Add />} />
+      <Route path="/edit" element={<Edit/>} />
       <Route path="/tasks" element={<Task/>} />
       <Route path="/contact" element={<Contact />} />
       {/* <Route path="/profile" element={<Profile />} /> */}

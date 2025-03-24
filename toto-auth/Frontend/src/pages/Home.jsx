@@ -24,7 +24,7 @@ const Home = () => {
           <img
             src={homeImage}
             alt="Task Illustration"
-            className="w-full md:w-3/4 drop-shadow-lg"
+            className="w-full md:w-3/4 drop-shadow-lg "
           />
         </div>
       </section>

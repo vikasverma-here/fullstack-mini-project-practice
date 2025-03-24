@@ -1,6 +1,13 @@
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { UserContext } from "../context/userContext";
 const Add = () => {
+  const navigate = useNavigate()
+   const { task, setTask } = useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -8,9 +15,31 @@ const Add = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Task Data:", data);
-    reset(); // Clear the form after submission
+
+  
+
+  // Edit mode mein form ko pre-fill karo
+  
+
+  const onSubmit = async  (data) => {
+    // console.log("Task Data:", data);
+
+    try {
+      const response = await axios.post("http://localhost:4000/api/todo/create",data, {
+        
+        withCredentials: true,
+      });
+      // console.log(response.data.todos);
+      
+      toast(response.data.message)
+      reset(); 
+      navigate("/task")
+    } catch (error) {
+      console.error("Error fetching todos:", error);
+    }
+
+
+    
   };
 
   return (
